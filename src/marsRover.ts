@@ -12,7 +12,11 @@ export class MarsRover {
     }
 
     executeCommands(commands: Command[]) {
-        this.direction = commands[0] === Command.TurnLeft
+        commands.forEach(command => this.handleCommand(command));
+    }
+
+    private handleCommand(command: Command) {
+        this.direction = command === Command.TurnLeft
             ? this.leftDirections().get(this.direction)
             : this.rightDirections().get(this.direction);
     }
