@@ -31,4 +31,13 @@ describe('Mars Rover', () => {
 
         expect(rover.direction).toBe(Direction.East);
     })
+
+    it('should direct to East when facing South and turning left',() =>  {
+        const startDirection = Direction.South;
+        const rover = new MarsRover(startPosition, startDirection);
+
+        rover.executeCommands([Command.TurnLeft])
+
+        expect(rover.direction).toBe(Direction.East);
+    })
 });
