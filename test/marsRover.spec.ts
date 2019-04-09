@@ -4,8 +4,9 @@ import { Direction } from "../src/direction";
 import { Command } from "../src/command";
 
 describe('Mars Rover', () => {
+
+    const startPosition = new Position(0, 0);
     it('should start from a given initial point', () => {
-        const startPosition = new Position(0, 0);
         const startDirection = Direction.North;
         const rover = new MarsRover(startPosition, startDirection);
         
@@ -14,7 +15,6 @@ describe('Mars Rover', () => {
     });
 
     it('should direct to West when facing North and turning left',() =>  {
-        const startPosition = new Position(0, 0);
         const startDirection = Direction.North;
         const rover = new MarsRover(startPosition, startDirection);
 
