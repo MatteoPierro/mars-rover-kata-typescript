@@ -4,21 +4,15 @@ import { Command } from "./command";
 import { RoverState } from "./roverState";
 
 export class MarsRover {
-    position: Position;
-    direction: Direction;
     state: RoverState;
 
-    constructor(startPosition: Position, startDirection: Direction) {
-        this.position = startPosition;  
-        this.direction = startDirection;  
+    constructor(startPosition: Position, startDirection: Direction) { 
         this.state = new RoverState(startPosition, startDirection);
     }
 
     executeCommands(commands: Command[]) {
         commands.forEach(command => {
             this.state = this.execute(command);
-            this.position = this.state.position;
-            this.direction = this.state.direction;
         });
     }
 
