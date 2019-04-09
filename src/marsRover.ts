@@ -12,6 +12,8 @@ export class MarsRover {
     }
 
     executeCommands(commands: Command[]) {
-        this.direction = Direction.West;
+        this.direction = commands[0] === Command.TurnLeft
+            ? Direction.West
+            : Direction.East
     }
 }
