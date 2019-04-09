@@ -11,8 +11,8 @@ describe('Mars Rover', () => {
     it('should start from a given initial point', () => {
         const rover = new MarsRover(startPosition, startDirection);
         
-        expect(rover.position).toBe(startPosition);
-        expect(rover.direction).toBe(startDirection);
+        expect(rover.state.position).toBe(startPosition);
+        expect(rover.state.direction).toBe(startDirection);
     });
 
     it('should direct to West when facing North and turning left',() =>  {
@@ -21,7 +21,7 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.TurnLeft])
 
-        expect(rover.direction).toBe(Direction.West);
+        expect(rover.state.direction).toBe(Direction.West);
     });
 
     it('should direct to East when facing North and turning right',() =>  {
@@ -30,7 +30,7 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.TurnRight])
 
-        expect(rover.direction).toBe(Direction.East);
+        expect(rover.state.direction).toBe(Direction.East);
     });
 
     it('should direct to East when facing South and turning left',() =>  {
@@ -39,7 +39,7 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.TurnLeft])
 
-        expect(rover.direction).toBe(Direction.East);
+        expect(rover.state.direction).toBe(Direction.East);
     });
 
     it('should return to the starting point when turn left 4 times', () => {
@@ -51,7 +51,7 @@ describe('Mars Rover', () => {
             Command.TurnLeft,
             Command.TurnLeft])
 
-        expect(rover.direction).toBe(startDirection);
+        expect(rover.state.direction).toBe(startDirection);
     });
 
     it('should return to the starting point when turn righ 4 times', () => {
@@ -63,7 +63,7 @@ describe('Mars Rover', () => {
             Command.TurnRight,
             Command.TurnRight])
 
-        expect(rover.direction).toBe(startDirection);
+        expect(rover.state.direction).toBe(startDirection);
     });
 
     it('should return to the starting point when turn righ 2 times then turn left 2 times', () => {
@@ -75,7 +75,7 @@ describe('Mars Rover', () => {
             Command.TurnLeft,
             Command.TurnLeft])
 
-        expect(rover.direction).toBe(startDirection);
+        expect(rover.state.direction).toBe(startDirection);
     });
 
     it('should return to the starting point when turn left 2 times then turn right 2 times', () => {
@@ -87,7 +87,7 @@ describe('Mars Rover', () => {
             Command.TurnRight,
             Command.TurnRight])
 
-        expect(rover.direction).toBe(startDirection);
+        expect(rover.state.direction).toBe(startDirection);
     });
 
     it('should move forward along y when is facing north and receive forward command', () => {
@@ -95,7 +95,7 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.MoveForward]);
         
-        expect(rover.position).toEqual(new Position(0, 1));
+        expect(rover.state.position).toEqual(new Position(0, 1));
     });
 
     it('should move backward along y when is facing north and receive backward command', () => {
@@ -103,6 +103,6 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.MoveBackward]);
         
-        expect(rover.position).toEqual(new Position(0, 0));
+        expect(rover.state.position).toEqual(new Position(0, 0));
     });
 });
