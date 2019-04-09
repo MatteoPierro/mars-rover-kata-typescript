@@ -89,4 +89,12 @@ describe('Mars Rover', () => {
 
         expect(rover.direction).toBe(startDirection);
     });
+
+    it('should move along y when is facing north and receive forward command', () => {
+        const rover = new MarsRover(new Position(0, 0), Direction.North);
+
+        rover.executeCommands([Command.MoveForward]);
+        
+        expect(rover.position).toEqual(new Position(0, 1));
+    });
 });

@@ -1,6 +1,7 @@
 import { Position } from "./position";
 import { Direction } from "./direction";
 import { Command } from "./command";
+import { throwStatement } from "@babel/types";
 
 export class MarsRover {
     position: Position;
@@ -16,9 +17,18 @@ export class MarsRover {
     }
 
     private handleCommand(command: Command) {
-        this.direction = command === Command.TurnLeft
-            ? this.leftDirections().get(this.direction)
-            : this.rightDirections().get(this.direction);
+        switch (command) {
+            case Command.TurnLeft :
+                this.direction = this.leftDirections().get(this.direction);
+                break;
+            case Command.TurnRight :
+                this.direction = this.rightDirections().get(this.direction);                   
+                break;
+            default:
+                let newX = this.position.x;
+                let newY = this.position.y + 1;
+                this.position = new Position(newX, newY);
+        }
     }
 
     private leftDirections(): Map<Direction, Direction> {
