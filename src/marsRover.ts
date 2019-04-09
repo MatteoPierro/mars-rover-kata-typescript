@@ -1,58 +1,69 @@
 import { Position } from "./position";
 import { Direction } from "./direction";
 import { Command } from "./command";
+import { RoverState } from "./roverState";
 
 export class MarsRover {
     position: Position;
     direction: Direction;
+    state: RoverState;
 
     constructor(startPosition: Position, startDirection: Direction) {
         this.position = startPosition;  
         this.direction = startDirection;  
+        this.state = new RoverState(startPosition, startDirection);
     }
 
     executeCommands(commands: Command[]) {
-        commands.forEach(command => this.handleCommand(command));
+        commands.forEach(command => {
+            this.state = this.execute(command);
+            this.position = this.state.position;
+            this.direction = this.state.direction;
+        });
     }
 
-    private handleCommand(command: Command) {
+    private execute(command: Command): RoverState  {
         switch (command) {
             case Command.TurnLeft :
-                this.turnLeft();
-                break;
+                return turnLeft(this.state);
             case Command.TurnRight :
-                this.turnRight();
-                break;
+                return turnRight(this.state);
             case Command.MoveForward:
-                this.moveForward();
-                break;
+                return moveForward(this.state);
             case Command.MoveBackward:
-                this.moveBackward();     
-                break;
+                return moveBackward(this.state);
             default:
                 throw "Unknown command!"
         }
     }
+}
 
-    private turnLeft() {
-        this.direction = leftDirections().get(this.direction);
-    }
+function turnLeft(currentState: RoverState): RoverState {
+    let newPosition = currentState.position;
+    let newDirection = leftDirections().get(currentState.direction);
+    return new RoverState(newPosition, newDirection);
+}
 
-    private turnRight() {
-        this.direction = rightDirections().get(this.direction);
-    }
+function turnRight(currentState: RoverState): RoverState {
+    let newPosition = currentState.position;
+    let newDirection = rightDirections().get(currentState.direction);
+    return new RoverState(newPosition, newDirection);
+}
 
-    private moveForward() {
-        let newX = this.position.x;
-        let newY = this.position.y + 1;
-        this.position = new Position(newX, newY);
-    }
+function moveForward(currentState: RoverState): RoverState {
+    let newX = currentState.position.x;
+    let newY = currentState.position.y + 1;
+    let newPosition = new Position(newX, newY);
+    let newDirection = currentState.direction;
+    return new RoverState(newPosition, newDirection);
+}
 
-    private moveBackward() {
-        let newX = this.position.x;
-        let newY = this.position.y - 1;
-        this.position = new Position(newX, newY);
-    }
+function moveBackward(currentState: RoverState): RoverState {
+    let newX = currentState.position.x;
+    let newY = currentState.position.y - 1;
+    let newPosition = new Position(newX, newY);
+    let newDirection = currentState.direction;
+    return new RoverState(newPosition, newDirection);
 }
 
 function leftDirections(): Map<Direction, Direction> {
