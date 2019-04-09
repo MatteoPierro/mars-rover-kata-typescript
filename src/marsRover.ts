@@ -24,11 +24,27 @@ export class MarsRover {
             case Command.TurnRight :
                 this.direction = this.rightDirections().get(this.direction);                   
                 break;
+            case Command.MoveForward:
+                this.moveForward();        
+                break;
+            case Command.MoveBackward:
+                this.moveBackward();     
+                break;
             default:
-                let newX = this.position.x;
-                let newY = this.position.y + 1;
-                this.position = new Position(newX, newY);
+                throw "Unknown command!"
         }
+    }
+
+    private moveForward() {
+        let newX = this.position.x;
+        let newY = this.position.y + 1;
+        this.position = new Position(newX, newY);
+    }
+
+    private moveBackward() {
+        let newX = this.position.x;
+        let newY = this.position.y - 1;
+        this.position = new Position(newX, newY);
     }
 
     private leftDirections(): Map<Direction, Direction> {
