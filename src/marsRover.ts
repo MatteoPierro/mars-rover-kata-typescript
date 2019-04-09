@@ -1,9 +1,9 @@
-export class MarsRover {
-    positionX:number;
-    positionY:number;
+import { Position } from "./position";
 
-    constructor(positionX: number, positionY: number) {
-        this.positionX = positionX;
-        this.positionY = positionY;    
+export class MarsRover {
+    position:Position;
+
+    constructor(x: number, y: number) {
+        this.position = new Position(x, y);    
     }
 }
