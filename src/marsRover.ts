@@ -19,13 +19,13 @@ export class MarsRover {
     private handleCommand(command: Command) {
         switch (command) {
             case Command.TurnLeft :
-                this.direction = this.leftDirections().get(this.direction);
+                this.turnLeft();
                 break;
             case Command.TurnRight :
-                this.direction = this.rightDirections().get(this.direction);                   
+                this.turnRight();
                 break;
             case Command.MoveForward:
-                this.moveForward();        
+                this.moveForward();
                 break;
             case Command.MoveBackward:
                 this.moveBackward();     
@@ -33,6 +33,14 @@ export class MarsRover {
             default:
                 throw "Unknown command!"
         }
+    }
+
+    private turnLeft() {
+        this.direction = this.leftDirections().get(this.direction);
+    }
+
+    private turnRight() {
+        this.direction = this.rightDirections().get(this.direction);
     }
 
     private moveForward() {
