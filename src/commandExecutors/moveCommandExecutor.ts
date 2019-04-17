@@ -7,10 +7,10 @@ export abstract class MoveCommandExecutor implements CommandExecutor{
     execute(currentState: RoverState): RoverState {
         const xStep = this.xSteps().get(currentState.direction);
         const yStep = this.ySteps().get(currentState.direction);
-        let newX = currentState.position.x + xStep;
-        let newY = currentState.position.y + yStep;
-        let newPosition = new Position(newX, newY);
-        let newDirection = currentState.direction;
+        const newX = currentState.position.x + xStep;
+        const newY = currentState.position.y + yStep;
+        const newPosition = new Position(newX, newY);
+        const newDirection = currentState.direction;
         return new RoverState(newPosition, newDirection);
     }
 

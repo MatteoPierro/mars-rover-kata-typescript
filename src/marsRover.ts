@@ -1,3 +1,4 @@
+import { CommandExecutor } from './commandExecutors/commandExecutor';
 import { Position } from "./position";
 import { Direction } from "./direction";
 import { Command } from "./command";
@@ -16,20 +17,21 @@ export class MarsRover {
 
     executeCommands(commands: Command[]) {
         commands.forEach(command => {
-            this.state = this.execute(command);
+            const executor = this.executeFor(command)
+            this.state = executor.execute(this.state);
         });
     }
 
-    private execute(command: Command): RoverState  {
+    private executeFor(command: Command): CommandExecutor  {
         switch (command) {
             case Command.TurnLeft :
-                return new TurnLeftCommandExecutor().execute(this.state);
+                return new TurnLeftCommandExecutor();
             case Command.TurnRight :
-                return new TurnRightCommandExecutor().execute(this.state);
+                return new TurnRightCommandExecutor();
             case Command.MoveForward:
-                return new MoveForwardCommandExecutor().execute(this.state);
+                return new MoveForwardCommandExecutor();
             case Command.MoveBackward:
-                return new MoveBackwardCommandExecutor().execute(this.state);
+                return new MoveBackwardCommandExecutor();
             default:
                 throw "Unknown command!"
         }

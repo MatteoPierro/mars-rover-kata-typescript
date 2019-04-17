@@ -4,8 +4,8 @@ import { Direction } from "../direction";
 
 export class TurnLeftCommandExecutor implements CommandExecutor{
     execute(currentState: RoverState): RoverState {
-        let newPosition = currentState.position;
-        let newDirection = leftDirections().get(currentState.direction);
+        const newPosition = currentState.position;
+        const newDirection = leftDirections().get(currentState.direction);
         return new RoverState(newPosition, newDirection);
     }
 }
