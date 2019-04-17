@@ -1,7 +1,8 @@
-import { Direction } from "./direction";
-import { RoverState } from "./roverState";
+import { CommandExecutor } from './commandExecutor';
+import { Direction } from "../direction";
+import { RoverState } from "../roverState";
 
-export class TurnRightCommandExecutor {
+export class TurnRightCommandExecutor implements CommandExecutor{
     execute(currentState: RoverState): RoverState {
         let newPosition = currentState.position;
         let newDirection = rightDirections().get(currentState.direction);

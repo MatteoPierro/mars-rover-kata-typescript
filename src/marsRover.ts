@@ -2,10 +2,10 @@ import { Position } from "./position";
 import { Direction } from "./direction";
 import { Command } from "./command";
 import { RoverState } from "./roverState";
-import { TurnRightCommandExecutor } from './turnRightCommandExecutor';
-import { TurnLeftCommandExecutor } from './turnLeftCommandExecutor';
-import { MoveBackwardCommandExecutor } from './moveBackwardCommandExecutor';
-import { MoveForwardCommandExecutor } from './moveForwardCommandExecutor';
+import { TurnRightCommandExecutor } from './commandExecutors/turnRightCommandExecutor';
+import { TurnLeftCommandExecutor } from './commandExecutors/turnLeftCommandExecutor';
+import { MoveBackwardCommandExecutor } from './commandExecutors/moveBackwardCommandExecutor';
+import { MoveForwardCommandExecutor } from './commandExecutors/moveForwardCommandExecutor';
 
 export class MarsRover {
     state: RoverState;
