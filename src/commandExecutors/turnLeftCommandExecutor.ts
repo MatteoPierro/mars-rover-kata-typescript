@@ -1,22 +1,15 @@
-import { CommandExecutor } from './commandExecutor';
-import { RoverState } from "../roverState";
 import { Direction } from "../direction";
+import { TurnCommandExecutor } from './turnCommandExecutor';
 
-export class TurnLeftCommandExecutor implements CommandExecutor{
-    execute(currentState: RoverState): RoverState {
-        const newPosition = currentState.position;
-        const newDirection = leftDirections().get(currentState.direction);
-        return new RoverState(newPosition, newDirection);
+export class TurnLeftCommandExecutor extends TurnCommandExecutor {
+    protected directions(): Map<Direction, Direction> {
+        const directions = new Map<Direction, Direction>();
+
+        directions.set(Direction.North, Direction.West);
+        directions.set(Direction.South, Direction.East);
+        directions.set(Direction.East, Direction.North);
+        directions.set(Direction.West, Direction.South);
+
+        return directions;
     }
-}
-
-function leftDirections(): Map<Direction, Direction> {
-    const leftDirections = new Map<Direction, Direction>();
-
-    leftDirections.set(Direction.North, Direction.West);
-    leftDirections.set(Direction.South, Direction.East);
-    leftDirections.set(Direction.East, Direction.North);
-    leftDirections.set(Direction.West, Direction.South);
-
-    return leftDirections;
 }
