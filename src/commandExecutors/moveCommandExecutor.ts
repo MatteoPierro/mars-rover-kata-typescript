@@ -25,24 +25,22 @@ export abstract class MoveCommandExecutor implements CommandExecutor {
     private newY(currentState: RoverState): number {
         const yStep = this.ySteps().get(currentState.direction);
         const newY = currentState.position.y + yStep;
-        if (newY < 0) {
-            return this.grid.y;
-        } else if (newY > this.grid.y) {
-            return 0;
-        } else {
-            return newY;
-        }
+        return threshold(newY, this.grid.y);
     }
 
     private newX(currentState: RoverState): number {
         const xStep = this.xSteps().get(currentState.direction);
         const newX = currentState.position.x + xStep;
-        if (newX < 0) {
-            return this.grid.x;
-        } else if (newX > this.grid.x) {
-            return 0;
-        } else {
-            return newX;
-        }
+        return threshold(newX, this.grid.x);
+    }
+}
+
+function threshold(coordinate: number, limit: number): number {
+    if (coordinate < 0) {
+        return limit;
+    } else if (coordinate > limit) {
+        return 0;
+    } else {
+        return coordinate;
     }
 }
