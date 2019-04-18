@@ -2,6 +2,7 @@ import { RoverState } from '../../src/roverState';
 import { MoveBackwardCommandExecutor } from '../../src/commandExecutors/moveBackwardCommandExecutor';
 import { Position } from "../../src/position";
 import { Direction } from "../../src/direction";
+import { Grid } from '../../src/grid';
 
 describe('MoveBackwardCommandExecutor', () => {
     const executor = new MoveBackwardCommandExecutor();
@@ -36,5 +37,25 @@ describe('MoveBackwardCommandExecutor', () => {
         const newState = executor.execute(currentState);
 
         expect(newState.position).toEqual(new Position(1, 0));
+    });
+
+    it('should move to x limit when is on the x origin and facing east and receive backward command', () => {
+        const xLimit = 5;
+        const executor = new MoveBackwardCommandExecutor(new Grid(xLimit, Number.MAX_VALUE));
+
+        const currentState = new RoverState(new Position(0, 1), Direction.East);
+        const newState = executor.execute(currentState);
+
+        expect(newState.position).toEqual(new Position(xLimit, 1));
+    });
+
+    it('should move to origin x when is on the edge and facing west and receive backward command', () => {
+        const xLimit = 5;
+        const executor = new MoveBackwardCommandExecutor(new Grid(xLimit, Number.MAX_VALUE));
+
+        const currentState = new RoverState(new Position(xLimit, 1), Direction.West);
+        const newState = executor.execute(currentState);
+
+        expect(newState.position).toEqual(new Position(0, 1));
     });
 });

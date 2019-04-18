@@ -108,7 +108,7 @@ describe('Mars Rover', () => {
         expect(rover.state.position).toEqual(new Position(0, 0));
     });
 
-    it('should return to origin x when is on the edge and facing est and receive forward command', () => {
+    it('should return to origin x when is on the edge and facing east and receive forward command', () => {
         const xLimit = 5;
         const rover = new MarsRover(new Position(xLimit, 0), Direction.East, new Grid(xLimit,5));
 
