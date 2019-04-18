@@ -22,16 +22,28 @@ export abstract class MoveCommandExecutor implements CommandExecutor {
         return new RoverState(newPosition, newDirection);
     }
 
-    private newY(currentState: RoverState): number {
-        const yStep = this.ySteps().get(currentState.direction);
-        const newY = currentState.position.y + yStep;
-        return threshold(newY, this.grid.y);
+    private newY(state: RoverState): number {
+        return this.newCoordinate(
+            state.position.y,
+            state.direction,
+            this.ySteps(),
+            this.grid.y
+        );
     }
 
-    private newX(currentState: RoverState): number {
-        const xStep = this.xSteps().get(currentState.direction);
-        const newX = currentState.position.x + xStep;
-        return threshold(newX, this.grid.x);
+    private newX(state: RoverState): number {
+        return this.newCoordinate(
+            state.position.x,
+            state.direction,
+            this.xSteps(),
+            this.grid.x
+        );
+    }
+
+    private newCoordinate(currentCoordinate: number, direction: Direction, steps: Map<Direction, number>, limit: number): number {
+        const step = steps.get(direction);
+        const newCoordinate = currentCoordinate + step;
+        return threshold(newCoordinate, limit);
     }
 }
 
