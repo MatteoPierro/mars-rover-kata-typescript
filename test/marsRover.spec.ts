@@ -116,4 +116,22 @@ describe('Mars Rover', () => {
 
         expect(rover.state.position).toEqual(new Position(0, 0));
     });
+
+    it('should return to origin', () => {
+        const grid = new Grid(3,3);
+        const rover = new MarsRover(new Position(0, 0), Direction.North, grid);
+
+        rover.executeCommands([
+            Command.MoveBackward,
+            Command.TurnLeft,
+            Command.MoveForward,
+            Command.TurnRight,
+            Command.MoveForward,
+            Command.TurnLeft,
+            Command.MoveBackward
+        ]);
+
+        expect(rover.state.position).toEqual(new Position(0, 0));
+        expect(rover.state.direction).toEqual(Direction.West);
+    });
 });
