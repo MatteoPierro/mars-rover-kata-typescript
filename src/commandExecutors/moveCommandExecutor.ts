@@ -31,8 +31,12 @@ export abstract class MoveCommandExecutor implements CommandExecutor {
     private newX(currentState: RoverState): number {
         const xStep = this.xSteps().get(currentState.direction);
         const newX = currentState.position.x + xStep;
-        return newX <= this.grid.x
-            ? newX
-            : 0;
+        if (newX < 0) {
+            return this.grid.x;
+        } else if (newX > this.grid.x) {
+            return 0;
+        } else {
+            return newX;
+        }
     }
 }

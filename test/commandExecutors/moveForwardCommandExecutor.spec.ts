@@ -2,6 +2,7 @@ import { RoverState } from './../../src/roverState';
 import { MoveForwardCommandExecutor } from './../../src/commandExecutors/moveForwardCommandExecutor';
 import { Position } from "../../src/position";
 import { Direction } from "../../src/direction";
+import { Grid } from '../../src/grid';
 
 describe('MoveForwardCommandExecutor', () => {
     const executor = new MoveForwardCommandExecutor();
@@ -36,5 +37,15 @@ describe('MoveForwardCommandExecutor', () => {
         const newState = executor.execute(currentState);
         
         expect(newState.position).toEqual(new Position(0, 0));
+    });
+
+    it('should move to x limit when is on the x origin and facing west and receive forward command', () => {
+        const xLimit = 5;
+        const executor = new MoveForwardCommandExecutor(new Grid(xLimit, Number.MAX_VALUE));
+        
+        const currentState = new RoverState(new Position(0, 1), Direction.West);
+        const newState = executor.execute(currentState);
+
+        expect(newState.position).toEqual(new Position(xLimit, 1));
     });
 });
