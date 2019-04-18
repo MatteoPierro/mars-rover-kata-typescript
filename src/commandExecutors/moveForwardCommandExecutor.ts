@@ -2,6 +2,7 @@ import { Direction } from '../direction';
 import { MoveCommandExecutor } from './moveCommandExecutor';
 
 export class MoveForwardCommandExecutor extends MoveCommandExecutor {
+    
     protected xSteps(): Map<Direction, number> {
         const steps = new Map<Direction, number>();
 

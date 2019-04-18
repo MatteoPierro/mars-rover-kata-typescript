@@ -1,7 +1,9 @@
+import { RoverState } from './../src/roverState';
 import { MarsRover } from "../src/marsRover";
 import { Position } from "../src/position";
 import { Direction } from "../src/direction";
 import { Command } from "../src/command";
+import { Grid } from '../src/grid';
 
 describe('Mars Rover', () => {
 
@@ -103,6 +105,15 @@ describe('Mars Rover', () => {
 
         rover.executeCommands([Command.MoveBackward]);
         
+        expect(rover.state.position).toEqual(new Position(0, 0));
+    });
+
+    it('should return to origin x when is on the edge and facing est and receive forward command', () => {
+        const xLimit = 5;
+        const rover = new MarsRover(new Position(xLimit, 0), Direction.East, new Grid(xLimit,5));
+
+        rover.executeCommands([Command.MoveForward]);
+
         expect(rover.state.position).toEqual(new Position(0, 0));
     });
 });

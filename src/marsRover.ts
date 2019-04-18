@@ -7,31 +7,34 @@ import { TurnRightCommandExecutor } from './commandExecutors/turnRightCommandExe
 import { TurnLeftCommandExecutor } from './commandExecutors/turnLeftCommandExecutor';
 import { MoveBackwardCommandExecutor } from './commandExecutors/moveBackwardCommandExecutor';
 import { MoveForwardCommandExecutor } from './commandExecutors/moveForwardCommandExecutor';
+import { Grid } from './grid';
 
 export class MarsRover {
     state: RoverState;
+    private grid: Grid;
 
-    constructor(startPosition: Position, startDirection: Direction) { 
+    constructor(startPosition: Position, startDirection: Direction, grid: Grid = new Grid(Number.MAX_VALUE, Number.MAX_VALUE)) { 
         this.state = new RoverState(startPosition, startDirection);
+        this.grid = grid;
     }
 
     executeCommands(commands: Command[]) {
         commands.forEach(command => {
-            const executor = this.executeFor(command)
+            const executor = this.executorFor(command)
             this.state = executor.execute(this.state);
         });
     }
 
-    private executeFor(command: Command): CommandExecutor  {
+    private executorFor(command: Command): CommandExecutor  {
         switch (command) {
             case Command.TurnLeft :
                 return new TurnLeftCommandExecutor();
             case Command.TurnRight :
                 return new TurnRightCommandExecutor();
             case Command.MoveForward:
-                return new MoveForwardCommandExecutor();
+                return new MoveForwardCommandExecutor(this.grid);
             case Command.MoveBackward:
-                return new MoveBackwardCommandExecutor();
+                return new MoveBackwardCommandExecutor(this.grid);
             default:
                 throw "Unknown command!"
         }
