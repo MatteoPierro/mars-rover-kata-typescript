@@ -25,20 +25,16 @@ export abstract class MoveCommandExecutor implements CommandExecutor {
     private newPosition(currentState: RoverState): Position {
         const newX = this.newX(currentState);
         const newY = this.newY(currentState);
-        const newPosition = new Position(newX, newY); 
+        const newPosition = new Position(newX, newY);
         return this.isAnObstacle(newPosition)
             ? currentState.position
             : newPosition;
     }
 
     private isAnObstacle(position: Position): Boolean {
-        for (const obstacle of this.obstacles) {
-            if (obstacle.x === position.x && obstacle.y === position.y) {
-                return true;
-            }
-        }
-
-        return false;
+        const isObstacle =
+            (obstacle) => obstacle.x === position.x && obstacle.y === position.y;
+        return this.obstacles.some(isObstacle);
     }
 
     private newY(state: RoverState): number {
