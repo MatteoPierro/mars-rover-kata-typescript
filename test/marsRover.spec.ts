@@ -134,4 +134,27 @@ describe('Mars Rover', () => {
         expect(rover.state.position).toEqual(new Position(0, 0));
         expect(rover.state.direction).toEqual(Direction.West);
     });
+
+    it('should avoid obstacles', () => {
+        const grid = new Grid(2, 2);
+        const obstacles = [new Position(1, 1), new Position(2, 2)];
+        const rover = new MarsRover(new Position(0, 0), Direction.North, grid, obstacles);
+
+        rover.executeCommands([
+            Command.TurnRight,
+            Command.MoveForward,
+            Command.TurnLeft,
+            Command.MoveForward,
+            Command.TurnLeft,
+            Command.MoveBackward,
+            Command.TurnRight,
+            Command.MoveForward,
+            Command.MoveForward,
+            Command.MoveForward,
+            Command.TurnLeft,
+            Command.MoveForward
+        ]);
+
+        expect(rover.state.position).toEqual(new Position(2, 1));
+    });
 });

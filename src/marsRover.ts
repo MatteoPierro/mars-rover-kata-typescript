@@ -12,10 +12,12 @@ import { Grid } from './grid';
 export class MarsRover {
     state: RoverState;
     private grid: Grid;
+    private obstacles: Position[];
 
-    constructor(startPosition: Position, startDirection: Direction, grid: Grid = new Grid(Number.MAX_VALUE, Number.MAX_VALUE)) { 
+    constructor(startPosition: Position, startDirection: Direction, grid: Grid = new Grid(Number.MAX_VALUE, Number.MAX_VALUE), obstacles: Position[] = []) { 
         this.state = new RoverState(startPosition, startDirection);
         this.grid = grid;
+        this.obstacles = obstacles;
     }
 
     executeCommands(commands: Command[]) {
@@ -32,9 +34,9 @@ export class MarsRover {
             case Command.TurnRight :
                 return new TurnRightCommandExecutor();
             case Command.MoveForward:
-                return new MoveForwardCommandExecutor(this.grid);
+                return new MoveForwardCommandExecutor(this.grid, this.obstacles);
             case Command.MoveBackward:
-                return new MoveBackwardCommandExecutor(this.grid);
+                return new MoveBackwardCommandExecutor(this.grid, this.obstacles);
             default:
                 throw "Unknown command!"
         }

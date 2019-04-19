@@ -6,20 +6,39 @@ import { Grid } from '../grid';
 
 export abstract class MoveCommandExecutor implements CommandExecutor {
     private grid: Grid;
+    private obstacles: Position[];
 
-    constructor(grid: Grid = new Grid(Number.MAX_VALUE, Number.MAX_VALUE)) {
+    constructor(grid: Grid = new Grid(Number.MAX_VALUE, Number.MAX_VALUE), obstacles: Position[] = []) {
         this.grid = grid;
+        this.obstacles = obstacles;
     }
 
     protected abstract xSteps(): Map<Direction, number>;
     protected abstract ySteps(): Map<Direction, number>;
 
     execute(currentState: RoverState): RoverState {
-        const newX = this.newX(currentState);
-        const newY = this.newY(currentState);
-        const newPosition = new Position(newX, newY);
+        const newPosition = this.newPosition(currentState);
         const newDirection = currentState.direction;
         return new RoverState(newPosition, newDirection);
+    }
+
+    private newPosition(currentState: RoverState): Position {
+        const newX = this.newX(currentState);
+        const newY = this.newY(currentState);
+        const newPosition = new Position(newX, newY); 
+        return this.isAnObstacle(newPosition)
+            ? currentState.position
+            : newPosition;
+    }
+
+    private isAnObstacle(position: Position): Boolean {
+        for (const obstacle of this.obstacles) {
+            if (obstacle.x === position.x && obstacle.y === position.y) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private newY(state: RoverState): number {
